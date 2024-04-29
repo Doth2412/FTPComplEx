@@ -1,5 +1,4 @@
-# TPComplEx 
-(Accepted by Expert Systems with Applications)
+# FTPComplEx
 
 ## Installation
 Create a conda environment with pytorch and scikit-learn :
