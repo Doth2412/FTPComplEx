@@ -60,12 +60,12 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    '--alpha', default = 1.0, type = float,
+    '--x', default = 1.0, type = float,
     help = "Temporal 2 ratio"
 )
 
 parser.add_argument(
-    '--beta', default = 1.0, type = float,
+    '--y', default = 1.0, type = float,
     help = "Temporal 3 ratio"
 )
 
@@ -87,7 +87,7 @@ model = {
     'TComplEx': TComplEx(sizes, args.rank, no_time_emb=args.no_time_emb),
     'TNTComplEx': TNTComplEx(sizes, args.rank, no_time_emb=args.no_time_emb),
     'TPComplEx': TPComplEx(sizes, args.rank, no_time_emb=args.no_time_emb),
-    'FTPComplEx': FTPComplEx(sizes, args.rank, no_time_emb=args.no_time_emb, a = args.alpha, b = args.beta),
+    'FTPComplEx': FTPComplEx(sizes, args.rank, no_time_emb=args.no_time_emb, x = args.x, y = args.y),
 }[args.model]
 model = model.cuda()
 

@@ -37,13 +37,13 @@ This will create the files required to compute the filtered metrics.
 Run the following commands in tkbc folder to reproduce the results
 
 ```
-python learner.py --dataset ICEWS14 --model FTPComplEx --rank 1594 --emb_reg 1e-1 --time_reg 1e-4 --alpha 0.7 --beta 1.0
+python learner.py --dataset ICEWS14 --model FTPComplEx --rank 1594 --emb_reg 1e-1 --time_reg 1e-4 --x 0.7 --y 0.8
 
-python learner.py --dataset ICEWS05-15 --model FTPComplEx --rank 886 --emb_reg 1e-2 --time_reg 1e-2 --alpha 0.8 --beta 1.0
+python learner.py --dataset ICEWS05-15 --model FTPComplEx --rank 886 --emb_reg 1e-2 --time_reg 1e-2 --x 1.0 --y 0.9
 
-python learner.py --dataset yago15k --model FTPComplEx --rank 364 --no_time_emb --emb_reg 1e-1 --time_reg 1e-4 --alpha 1.0 --beta 0.8
+python learner.py --dataset yago15k --model FTPComplEx --rank 364 --no_time_emb --emb_reg 1e-1 --time_reg 1e-4 --x 0.8 --y 0.9
 
-python learner.py --dataset gdelt --model FTPComplEx --rank 1256 --emb_reg 1e-5 --time_reg 1e-2 --alpha 1.0 --beta 0.8
+python learner.py --dataset gdelt --model FTPComplEx --rank 1256 --emb_reg 1e-5 --time_reg 1e-2 --x 1.0 --y 0.9
 
 ```
 

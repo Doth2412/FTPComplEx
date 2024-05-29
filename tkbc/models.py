@@ -567,7 +567,7 @@ class FTPComplEx(TKBCModel):
     def __init__(
             self, sizes: Tuple[int, int, int, int], rank: int,
             no_time_emb=False, init_size: float = 1e-2,
-            a: float = 1.0, b: float = 1.0
+            x: float = 1.0, y: float = 1.0
     ):
         super(FTPComplEx, self).__init__()
         self.sizes = sizes
@@ -584,8 +584,8 @@ class FTPComplEx(TKBCModel):
         self.embeddings[2].weight.data *= init_size
 
         self.no_time_emb = no_time_emb
-        self.a = a
-        self.b = b
+        self.x = x
+        self.y = y
 
     @staticmethod
     def has_time():
@@ -597,8 +597,8 @@ class FTPComplEx(TKBCModel):
         rhs = self.embeddings[0](x[:, 2])
         time = self.embeddings[2](x[:, 3])
 
-        lhs = lhs[:, :self.rank]+ self.a * time[:, 2*self.rank:3*self.rank], lhs[:, self.rank:]+ self.a * time[:, 3*self.rank:4*self.rank]
-        rhs = rhs[:, :self.rank]+ self.b * time[:, 4*self.rank:5*self.rank], rhs[:, self.rank:]+ self.b * time[:, 5*self.rank:6*self.rank]
+        lhs = lhs[:, :self.rank]+ self.x * time[:, 2*self.rank:3*self.rank], lhs[:, self.rank:]+ self.x * time[:, 3*self.rank:4*self.rank]
+        rhs = rhs[:, :self.rank]+ self.y * time[:, 4*self.rank:5*self.rank], rhs[:, self.rank:]+ self.y * time[:, 5*self.rank:6*self.rank]
         rel = rel[:, :self.rank], rel[:, self.rank:2*self.rank]
         
         time = time[:, :self.rank], time[:, self.rank:2*self.rank]
@@ -616,18 +616,14 @@ class FTPComplEx(TKBCModel):
         rel = self.embeddings[1](x[:, 1])
         rhs = self.embeddings[0](x[:, 2])
         time = self.embeddings[2](x[:, 3])
-        lhs = lhs[:, :self.rank]+ self.a * time[:, 2*self.rank:3*self.rank], lhs[:, self.rank:]+ self.a * time[:, 3*self.rank:4*self.rank]
-        rhs = rhs[:, :self.rank]+ self.b * time[:, 4*self.rank:5*self.rank], rhs[:, self.rank:]+ self.b * time[:, 5*self.rank:6*self.rank]
+        lhs = lhs[:, :self.rank]+ self.x * time[:, 2*self.rank:3*self.rank], lhs[:, self.rank:]+ self.x * time[:, 3*self.rank:4*self.rank]
+        rhs = rhs[:, :self.rank]+ self.y * time[:, 4*self.rank:5*self.rank], rhs[:, self.rank:]+ self.y * time[:, 5*self.rank:6*self.rank]
         
-        ##
-        bias_t_r = self.b * time[:, 4*self.rank:5*self.rank]
-        bias_t_i = self.b * time[:, 5*self.rank:6*self.rank]
-        ##
-        
+        bias_t_r = self.y * time[:, 4*self.rank:5*self.rank]
+        bias_t_i = self.y * time[:, 5*self.rank:6*self.rank]
         
         time = time[:, :self.rank], time[:, self.rank:2*self.rank]
-        
-
+    
         right = self.embeddings[0].weight
         right = right[:, :self.rank], right[:, self.rank:]
         rel = rel[:, :self.rank], rel[:, self.rank:2*self.rank]
@@ -656,8 +652,7 @@ class FTPComplEx(TKBCModel):
         lhs = self.embeddings[0](queries[:, 0])
         rel = self.embeddings[1](queries[:, 1])
         time = self.embeddings[2](queries[:, 3])
-        lhs = lhs[:, :self.rank]+ self.a * time[:, 2*self.rank:3*self.rank], lhs[:, self.rank:]+ self.a * time[:, 3*self.rank:4*self.rank]
-        #rhs = rhs[:, :self.rank]+ self.b * time[:, 4*self.rank:5*self.rank], rhs[:, self.rank:]+ self.b * time[:, 5*self.rank:6*self.rank]
+        lhs = lhs[:, :self.rank]+ self.x * time[:, 2*self.rank:3*self.rank], lhs[:, self.rank:]+ self.x * time[:, 3*self.rank:4*self.rank]
         rel = rel[:, :self.rank], rel[:, self.rank:2*self.rank]
         time = time[:, :self.rank], time[:, self.rank:2*self.rank]
         return torch.cat([
